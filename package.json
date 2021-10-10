@@ -1,0 +1,14 @@
+{
+  "name": "study-notes",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:aojiaodemeng/study-notes.git",
+  "author": "chenxinyi <chenxinyi@vikadata.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
