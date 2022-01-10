@@ -104,3 +104,6 @@ function example(foo: any){
 
 # 6.infer 关键词有什么用?
 [TypeScript 的 Infer 关键词](https://zhuanlan.zhihu.com/p/133249506)
+
+# 7.高阶类型
+[TypeScript中的一些高阶类型 Omit Pick ReturnType Parameters](https://blog.csdn.net/qq_41154298/article/details/119977307)
