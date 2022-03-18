@@ -77,15 +77,15 @@
 
   2.在模板文件`container/src/index.ejs`中指定模块添加访问地址
 
-```js
- <script type="systemjs-importmap">
-      {
-        "imports": {
-          "@xyOrg/no-frame-base": "//localhost:9001/xyOrg-no-frame-base.js"
+  ```js
+  <script type="systemjs-importmap">
+        {
+          "imports": {
+            "@xyOrg/no-frame-base": "//localhost:9001/xyOrg-no-frame-base.js"
+          }
         }
-      }
-    </script>
-```
+      </script>
+  ```
 
 - 2-5. 在`no-frame-base`项目设置启动命令
   ```js
@@ -93,3 +93,87 @@
   ```
 - 2-6. 启动
   先启动`no-frame-base`子应用，再启动`container`应用，此时访问`http://localhost:9000/no-frame-base`可以在容器应用页面看到添加进的子应用内容。
+
+## step3 创建基于 React 的微应用 `react-frame-base`
+
+- 3-1. 使用`create-single-spa`创建微前端应用：`react-frame-base`
+  ![](./image/create_react_frame_base.png)
+- 3-2. 修改应用端口 && 启动应用
+  ```js
+  // react-frame-base/package.json
+  "scripts":{
+    "start":"webpack serve --port 9002"
+  }
+  ```
+- 3-3. 将此子应用的入口文件注册到容器应用中 1.`container/src/xyOrg-root-config.js文件`
+
+  ```js
+  registerApplication({
+    name: "@xyOrg/react-frame-base",
+    activeWhen: "/react-frame-base",
+    app: () => System.import("@xyOrg/react-frame-base"),
+  });
+  ```
+
+  2.在模板文件`container/src/index.ejs`中指定微前端应用模块的引用地址
+
+  ```js
+  <script type="systemjs-importmap">
+        {
+          "imports": {
+            "@xyOrg/react-frame-base": "//localhost:9002/xyOrg-react-frame-base.js"
+          }
+        }
+      </script>
+  ```
+
+- 3-4 指定公共库的访问地址
+
+  > 默认情况下，应用中的`react`和`react-dom`没有被 webpack 打包，single-spa 认为它是公共库，不应该单独打包。
+  > ![](./image/add_shared_dependencies_tips.png)
+
+  此时，先启动`react-frame-base`子应用，再启动`container`应用，此时访问`http://localhost:9000/react-frame-base`可以在容器应用页面看到添加进的子应用内容。
+
+- 3-5 基于 React 框架的微前端应用配置路由 1.引入`react-router-dom`
+  首先在容器应用的`container/src/index.ejs`文件里引入`react-router-dom`，并在子应用的`react-frame-base`文件夹里设置：
+  ![](./image/ignore_react_router_dom.png)  
+   2.更改 root.component.js 文件
+
+  ```js
+  import React from "react";
+  import {
+    BrowserRouter,
+    Switch,
+    Route,
+    Redirect,
+    Link,
+  } from "react-router-dom";
+  import Home from "./Home";
+  import About from "./About";
+  // export default function Root(props) {
+  //   return <section>{props.name} is mounted!</section>;
+  // }
+  export default function Root(props) {
+    return (
+      <BrowserRouter basename="/react-frame-base">
+        {" "}
+        <div>{props.name}</div> <div>
+          {" "}
+          <Link to="/home">Home</Link> <Link to="/about">About</Link>{" "}
+        </div> <Switch>
+          {" "}
+          <Route path="/home">
+            {" "}
+            <Home />{" "}
+          </Route> <Route path="/about">
+            {" "}
+            <About />{" "}
+          </Route> <Route path="/">
+            {" "}
+            <Redirect to="/home" />{" "}
+          </Route>{" "}
+        </Switch>{" "}
+      </BrowserRouter>
+    );
+  }
+  ```
