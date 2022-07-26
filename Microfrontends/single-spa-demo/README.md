@@ -177,3 +177,15 @@
     );
   }
   ```
+
+## step4 创建基于 Vue 的微应用 `vue-frame-base`
+
+- 4-1. 使用`create-single-spa`创建微前端应用：`react-frame-base`
+  ![](./image/create_react_frame_base.png)
+- 4-2. 修改应用端口 && 启动应用
+  ```js
+  // react-frame-base/package.json
+  "scripts":{
+    "start":"webpack serve --port 9002"
+  }
+  ```
