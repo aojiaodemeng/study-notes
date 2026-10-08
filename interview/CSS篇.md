@@ -22,21 +22,26 @@
 - table：作为块级表格显示
 - inherit：继承父元素
 
-# 假设高度已知，请写出三栏布局，其中左栏、右栏宽度各为300px，中间自适应。
+# 假设高度已知，请写出三栏布局，其中左栏、右栏宽度各为 300px，中间自适应。
+
     方案：flex、grid、float、absolute、table
     注意如果是两列布局，可以用BFC方案。
-# BFC与边距重叠
-BFC相当于是一个容器，定义了里面的元素如何定位，并且与外界互不影响。BFC的作用：边距重叠问题、高度塌陷问题、创建自适应两栏布局
-创建BFC的条件：
-- overflow 值为：hidden、auto、scroll；不为visible
-- display 值为：inline-block、table-cell、table-caption、flex等；
+
+# BFC 与边距重叠
+
+BFC 相当于是一个容器，定义了里面的元素如何定位，并且与外界互不影响。BFC 的作用：边距重叠问题、高度塌陷问题、创建自适应两栏布局
+创建 BFC 的条件：
+
+- overflow 值为：hidden、auto、scroll；不为 visible
+- display 值为：inline-block、table-cell、table-caption、flex 等；
 - 元素设置绝对定位：position (absolute、fixed)；
 - 元素设置浮动：float 除 none 以外的值；
 - body
 
 边距重叠的解决方案：
+
 - 兄弟之间重叠
-  - 底部元素的position的值为absolute/fixed
+  - 底部元素的 position 的值为 absolute/fixed
   - 底部元素变为行内盒子：display: inline-block
   - 底部元素设置浮动：float
 - 父子之间
@@ -44,19 +49,19 @@ BFC相当于是一个容器，定义了里面的元素如何定位，并且与�
   - 子元素变为行内盒子：display: inline-block
   - 子元素加入浮动属性或定位
 
+# CSS 盒模型
 
-# CSS盒模型
 - bpx-sizing:content-box; - 标准模型，宽高只是内容（content）的宽高
-- box-sizing:border-box; - IE模型，宽高是内容(content)+填充(padding)+边框(border)的总宽高。
+- box-sizing:border-box; - IE 模型，宽高是内容(content)+填充(padding)+边框(border)的总宽高。
 
-# JS如何设置获取盒模型对应的宽和高
-- dom.style.width/height：只能取到dom元素内联样式所设置的宽高
-- dom.currentStyle.width/height：获取的是在页面渲染完成后的结果，只有IE浏览器支持
+# JS 如何设置获取盒模型对应的宽和高
+
+- dom.style.width/height：只能取到 dom 元素内联样式所设置的宽高
+- dom.currentStyle.width/height：获取的是在页面渲染完成后的结果，只有 IE 浏览器支持
 - window.getComputedStyle(dom).width/height：也是获取的是在页面渲染完成后的结果，兼容性更好
 - dom.getBoundingClientRect().width/height：元素在视窗中的绝对位置来获取宽高的
-- dom.offsetWidth/offsetHeight：兼容性最好（offsetWidth包括元素宽度、内边距和边框，clientWidth不包括边框）
-
+- dom.offsetWidth/offsetHeight：兼容性最好（offsetWidth 包括元素宽度、内边距和边框，clientWidth 不包括边框）
 
 # 响应式布局
-原理：通过媒体查询（@media）查询检测不同的设备屏幕尺寸做处理。 关于兼容： 页面头部必须有mate声明的viewport。
 
+原理：通过媒体查询（@media）查询检测不同的设备屏幕尺寸做处理。 关于兼容： 页面头部必须有 mate 声明的 viewport。
